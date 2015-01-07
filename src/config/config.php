@@ -50,15 +50,16 @@ return [
             // Prototype
             'production' => [
                 'servers' => [
-                    'host'      => '{host}',
-                    'username'  => '{username}',
-                    'password'  => '{password}',
-                    'key'       => '{key}',
-                    'keyphrase' => '{keyphrase}',
-                    'agent'     => '{agent}',
-                    'db_role'   => true,
-                    'roles'     => [],
-                    'config'    => [
+                    'host'          => '{host}',
+                    'username'      => '{username}',
+                    'password'      => '{password}',
+                    'key'           => '{key}',
+                    'keyphrase'     => '{keyphrase}',
+                    'agent'         => '{agent}',
+                    'agent_forward' => '{agent_forward}',
+                    'db_role'       => true,
+                    'roles'         => [],
+                    'config'        => [
 
                         // Prototype
                         'name' => [],
