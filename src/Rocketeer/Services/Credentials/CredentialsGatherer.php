@@ -24,12 +24,13 @@ class CredentialsGatherer
      */
     protected $rules = [
         'server'     => [
-            'host'      => true,
-            'username'  => true,
-            'password'  => false,
-            'keyphrase' => false,
-            'key'       => false,
-            'agent'     => false,
+            'host'          => true,
+            'username'      => true,
+            'password'      => false,
+            'keyphrase'     => false,
+            'key'           => false,
+            'agent'         => false,
+            'agent-forward' => false,
         ],
         'repository' => [
             'repository' => true,
@@ -138,11 +139,12 @@ class CredentialsGatherer
     {
         $password = $this->getCredential($credentials, 'password');
         $key      = $this->getCredential($credentials, 'key');
-        if ($password || $key) {
+        $agent    = $this->getCredential($credentials, 'agent');
+        if ($password || $key || $agent) {
             return (bool) $key;
         }
 
-        $types = ['key', 'password'];
+        $types = ['key', 'password', 'agent'];
         $type  = $this->ask('askWith', 'No password or SSH key is set for ['.$handle.'], which would you use?', 'key', $types);
 
         return $type === 'key';
@@ -160,7 +162,7 @@ class CredentialsGatherer
     protected function gatherCredentials($rules, $current, $handle)
     {
         // Alter rules depending on connection type
-        $authCredentials = ['key', 'password', 'keyphrase'];
+        $authCredentials = ['key', 'password', 'keyphrase', 'agent', 'agent-forward'];
         $unprompted      = $this->alterRules($rules, $current, $handle);
 
         // Loop through credentials and ask missing ones
@@ -305,7 +307,9 @@ class CredentialsGatherer
             return [];
         }
 
-        if ($this->usesSsh($handle, $credentials)) {
+        if (isset($credentials['agent']) && $credentials['agent']) {
+            return ['agent', 'agent-forward'];
+        } elseif ($this->usesSsh($handle, $credentials)) {
             $rules['key']       = true;
             $rules['keyphrase'] = true;
 

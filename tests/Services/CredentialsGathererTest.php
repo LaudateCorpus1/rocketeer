@@ -119,12 +119,13 @@ class CredentialsGathererTest extends RocketeerTestCase
 
         $credentials = $this->credentials->getServerCredentials('production', 0);
         $this->assertEquals([
-            'host'      => $this->host,
-            'username'  => $this->username,
-            'password'  => $this->password,
-            'keyphrase' => null,
-            'key'       => null,
-            'agent'     => null,
+            'host'          => $this->host,
+            'username'      => $this->username,
+            'password'      => $this->password,
+            'keyphrase'     => null,
+            'key'           => null,
+            'agent'         => null,
+            'agent-forward' => null,
         ], $credentials);
     }
 
@@ -152,12 +153,13 @@ class CredentialsGathererTest extends RocketeerTestCase
 
         $credentials = $this->credentials->getServerCredentials('production', 0);
         $this->assertEquals([
-            'host'      => $this->host,
-            'username'  => $this->username,
-            'password'  => $this->password,
-            'keyphrase' => null,
-            'key'       => null,
-            'agent'     => null,
+            'host'          => $this->host,
+            'username'      => $this->username,
+            'password'      => $this->password,
+            'keyphrase'     => null,
+            'key'           => null,
+            'agent'         => null,
+            'agent-forward' => null,
         ], $credentials);
     }
 
@@ -184,12 +186,13 @@ class CredentialsGathererTest extends RocketeerTestCase
 
         $credentials = $this->credentials->getServerCredentials('staging', 0);
         $this->assertEquals([
-            'host'      => $this->host,
-            'username'  => $this->username,
-            'password'  => null,
-            'keyphrase' => 'KEYPHRASE',
-            'key'       => $key,
-            'agent'     => null,
+            'host'          => $this->host,
+            'username'      => $this->username,
+            'password'      => $this->password,
+            'keyphrase'     => null,
+            'key'           => null,
+            'agent'         => null,
+            'agent-forward' => null,
         ], $credentials);
     }
 
@@ -216,12 +219,13 @@ class CredentialsGathererTest extends RocketeerTestCase
 
         $credentials = $this->credentials->getServerCredentials('production', 0);
         $this->assertEquals([
-            'host'      => $this->host,
-            'username'  => $this->username,
-            'password'  => null,
-            'keyphrase' => 'keyphrase',
-            'key'       => $this->key,
-            'agent'     => null,
+            'host'          => $this->host,
+            'username'      => $this->username,
+            'password'      => $this->password,
+            'keyphrase'     => null,
+            'key'           => null,
+            'agent'         => null,
+            'agent-forward' => null,
         ], $credentials);
 
         $stored = $this->localStorage->get('connections.production.servers.0');
