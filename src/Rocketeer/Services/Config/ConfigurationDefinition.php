@@ -126,6 +126,7 @@ EOF
                                         ->scalarNode('key')->defaultValue('{key}')->end()
                                         ->scalarNode('keyphrase')->defaultValue('{keyphrase}')->end()
                                         ->scalarNode('agent')->defaultValue('{agent}')->end()
+                                        ->scalarNode('agent_forward')->defaultValue('{agent_forward}')->end()
                                         ->booleanNode('db_role')->defaultTrue()->end()
                                         ->arrayNode('roles')
                                             ->prototype('scalar')->end()
