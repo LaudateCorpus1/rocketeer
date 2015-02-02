@@ -90,6 +90,7 @@ class QueueExplainer
             $comment .= ' [~'.$time.'s]';
         }
 
+        $this->logs->publish($comment);
         $this->command->line($comment);
     }
 
@@ -118,7 +119,8 @@ class QueueExplainer
 
         // Pass to command and log
         $this->command->line($formatted);
-        $this->logs->log($message);
+        $this->logs->log($message, false);
+        $this->logs->publish($formatted);
 
         return $formatted;
     }

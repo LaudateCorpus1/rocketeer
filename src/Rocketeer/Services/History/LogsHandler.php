@@ -33,17 +33,55 @@ class LogsHandler
      */
     protected $name = [];
 
+    public function publish($line)
+    {
+        // Recurse for arrays
+        if (is_array($line)) {
+            foreach ($line as $entry) {
+                $this->publish($entry);
+            }
+
+            return;
+        }
+
+        // Changes <fg=cyan> into <fg class="cyan"> from Symfony Console's colours
+        $line = preg_replace("/<fg=([a-z]+)>/", '<fg class="$1">', $line);
+        $line = preg_replace("/<\/fg=([a-z]+)>/", '</fg>', $line);
+
+        $release = $this->releasesManager->getNextRelease();
+
+        // Real-time eventing
+        $this->redis->publish('deploy:' . $release, json_encode(array(
+            'event' => 'log',
+            'line'  => $line,
+        )));
+
+        // Long-term storage
+        $this->redis->rpush('deploy:log:' . $release, $line);
+    }
+
     /**
      * Save something for the logs.
      *
      * @param string|string[] $string
      */
-    public function log($string)
+    public function log($string, $publish = true)
     {
+        // No stage means we're actually not ready to log yet
+        // This is a symptom of calling this method from Bash, where stage is
+        // figured out for the first time
+        if (! $this->connections->getStage()) {
+            return;
+        }
+
         // Create entry in the logs
         $file = $this->getCurrentLogsFile();
         if (!isset($this->logs[$file])) {
             $this->logs[$file] = [];
+        }
+
+        if ($publish) {
+            $this->publish($this->prependHandle($string));
         }
 
         // Prepend currenth handle
