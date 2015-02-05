@@ -136,7 +136,7 @@ trait Core
 
             if ($verbose) {
                 $display = $this->cleanOutput($results);
-                $this->explainer->server(trim($display));
+                $this->explainer->server(rtrim($display));
             }
         });
 
@@ -300,7 +300,9 @@ trait Core
 
         // Print out command if verbosity level allows it
         if ($verbosity && $this->hasCommand() && ($this->command->getOutput()->getVerbosity() >= $verbosity)) {
-            $this->explainer->line('$ '.$flattened, 'magenta', false);
+            foreach ((array) $commands as $command) {
+                $this->explainer->line('$ '.$command, 'magenta', false);
+            }
         }
     }
 

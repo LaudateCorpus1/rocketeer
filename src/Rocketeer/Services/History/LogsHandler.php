@@ -44,9 +44,13 @@ class LogsHandler
             return;
         }
 
-        // Changes <fg=cyan> into <fg class="cyan"> from Symfony Console's colours
-        $line = preg_replace("/<fg=([a-z]+)>/", '<fg class="$1">', $line);
-        $line = preg_replace("/<\/fg=([a-z]+)>/", '</fg>', $line);
+        // Changes <fg=cyan> into <fg class="cyan"> from Symfony Console colours
+        // Other formats:
+        //   <fg=black;bg=cyan>foo</fg=black;bg=cyan>
+        //   <bg=yellow;options=bold>foo</bg=yellow;options=bold>
+        $pattern = '(?:(?:fg|bg|options)=([a-z]+);?)';
+        $line = preg_replace("/" . $pattern . "/", 'fg class="$1"', $line);
+        $line = preg_replace("/\/" . $pattern . ">/", '</fg>', $line);
 
         $release = $this->releasesManager->getNextRelease();
 
