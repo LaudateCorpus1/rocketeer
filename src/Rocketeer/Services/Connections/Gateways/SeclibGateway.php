@@ -62,6 +62,13 @@ class SeclibGateway implements GatewayInterface
     protected $connection;
 
     /**
+     * The SecLib SSH Agent instance, if used.
+     *
+     * @type Agent
+     */
+    protected $agent;
+
+    /**
      * Create a new gateway implementation.
      *
      * @param string     $host
@@ -100,7 +107,13 @@ class SeclibGateway implements GatewayInterface
      */
     public function connect($username)
     {
-        return $this->getConnection()->login($username, $this->getAuthForLogin());
+        $status = $this->getConnection()->login($username, $this->getAuthForLogin());
+
+        if (isset($this->auth['agent-forward']) && $this->auth['agent-forward']) {
+            $this->agent->startSSHForwarding($this->getConnection());
+        }
+
+        return $status;
     }
 
     /**
@@ -285,7 +298,9 @@ class SeclibGateway implements GatewayInterface
      */
     public function getAgent()
     {
-        return new Agent();
+        $this->agent = new Agent();
+
+        return $this->agent;
     }
 
     /**
