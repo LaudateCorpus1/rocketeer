@@ -208,14 +208,14 @@ class ReleasesManager
      *
      * @param string|null $release
      */
-    public function markReleaseAsValid($release = null)
+    public function markRelease($release = null, $state = true)
     {
         $release = $release ?: $this->getCurrentRelease();
 
         // If the release is not null, mark it as valid
         if ($release) {
-            $this->state[$release] = true;
-            $this->storage->set($release, true);
+            $this->state[$release] = $state;
+            $this->storage->set($release, $state);
         }
     }
 

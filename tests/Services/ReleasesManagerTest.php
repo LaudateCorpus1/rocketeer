@@ -43,7 +43,7 @@ class ReleasesManagerTest extends RocketeerTestCase
 
     public function testCanUpdateStateOfReleases()
     {
-        $this->releasesManager->markReleaseAsValid(15000000000000);
+        $this->releasesManager->markRelease(15000000000000);
         $validation = $this->releasesManager->getValidationFile();
 
         $this->assertEquals([
@@ -53,9 +53,9 @@ class ReleasesManagerTest extends RocketeerTestCase
         ], $validation);
     }
 
-    public function testCanMarkReleaseAsValid()
+    public function testCanMarkRelease()
     {
-        $this->releasesManager->markReleaseAsValid(123456789);
+        $this->releasesManager->markRelease(123456789);
         $validation = $this->releasesManager->getValidationFile();
 
         $this->assertEquals([

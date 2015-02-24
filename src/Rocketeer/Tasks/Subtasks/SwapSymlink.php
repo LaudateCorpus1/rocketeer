@@ -34,7 +34,7 @@ class SwapSymlink extends AbstractTask
             $release = $this->releasesManager->getNextRelease();
 
             $this->coordinator->setStatus('symlink', Coordinator::DONE);
-            $this->releasesManager->markReleaseAsValid($release);
+            $this->releasesManager->markRelease($release);
             $this->explainer->line('Successfully deployed release '.$release);
         }
     }
