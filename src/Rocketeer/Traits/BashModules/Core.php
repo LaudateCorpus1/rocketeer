@@ -55,11 +55,6 @@ trait Core
      */
     public function getConnection()
     {
-        if (! $this->rocketeer->isLocal()) {
-            echo 'Exited local?'.PHP_EOL;
-            // var_dump(debug_backtrace());
-        }
-
         // Return LocalConnection if in local mode
         if ($this->local || $this->rocketeer->isLocal()) {
             return $this->app['remote.local'];
