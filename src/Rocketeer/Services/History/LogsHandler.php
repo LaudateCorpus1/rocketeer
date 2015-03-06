@@ -33,8 +33,17 @@ class LogsHandler
      */
     protected $name = [];
 
+    /**
+     * @param $line
+     * @todo move this out to an event
+     */
     public function publish($line)
     {
+        // Do not publish in pretend mode, or in Brain without a log prefix set
+        if ($this->getOption('pretend') || ($this->config->get('brain::active') && !$this->config->get('brain::log.active', true))) {
+            return;
+        }
+
         // Recurse for arrays
         if (is_array($line)) {
             foreach ($line as $entry) {
@@ -53,15 +62,20 @@ class LogsHandler
         $line = preg_replace("/\/" . $pattern . ">/", '</fg>', $line);
 
         $release = $this->releasesManager->getNextRelease();
+        $prefix = $this->config->get('brain::log.prefix', 'deploy:'.$release);
+
+        // Long-term storage
+        $this->redis->rpush($prefix.':log', $line);
+
+        if (!$this->config->get('brain::log.publish', true)) {
+            return;
+        }
 
         // Real-time eventing
-        $this->redis->publish('deploy:' . $release, json_encode(array(
+        $this->redis->publish($prefix, json_encode(array(
             'event' => 'log',
             'line'  => $line,
         )));
-
-        // Long-term storage
-        $this->redis->rpush('deploy:log:' . $release, $line);
     }
 
     /**
