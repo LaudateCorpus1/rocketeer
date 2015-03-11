@@ -109,7 +109,7 @@ class SeclibGateway implements GatewayInterface
     {
         $status = $this->getConnection()->login($username, $this->getAuthForLogin());
 
-        if (isset($this->auth['agent-forward']) && $this->auth['agent-forward']) {
+        if (isset($this->auth['agent_forward']) && $this->auth['agent_forward']) {
             $this->agent->startSSHForwarding($this->getConnection());
         }
 

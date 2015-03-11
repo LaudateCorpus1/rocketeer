@@ -111,8 +111,8 @@ class RemoteHandler
     protected function getAuth(array $config)
     {
         if (isset($config['agent']) && $config['agent']) {
-            if (isset($config['agent-forward']) && $config['agent-forward']) {
-                return ['agent' => true, 'agent-forward' => true];
+            if (isset($config['agent_forward']) && $config['agent_forward']) {
+                return ['agent' => true, 'agent_forward' => true];
             } else {
                 return ['agent' => true];
             }

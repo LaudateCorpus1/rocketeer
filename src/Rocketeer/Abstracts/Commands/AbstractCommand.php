@@ -156,7 +156,7 @@ abstract class AbstractCommand extends Command implements IdentifierInterface
             ['key', null, InputOption::VALUE_REQUIRED, 'The key to use if asked'],
             ['keyphrase', null, InputOption::VALUE_REQUIRED, 'The keyphrase to use if asked'],
             ['agent', null, InputOption::VALUE_REQUIRED, 'The agent to use if asked'],
-            ['agent-forward', null, InputOption::VALUE_NONE, 'Use agent forwarding'],
+            ['agent_forward', null, InputOption::VALUE_NONE, 'Use agent forwarding'],
             ['repository', null, InputOption::VALUE_REQUIRED, 'The repository to use if asked'],
         ];
 
