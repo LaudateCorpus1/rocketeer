@@ -30,7 +30,7 @@ class CredentialsGatherer
             'keyphrase'     => false,
             'key'           => false,
             'agent'         => false,
-            'agent-forward' => false,
+            'agent_forward' => false,
         ],
         'repository' => [
             'repository' => true,
@@ -162,7 +162,7 @@ class CredentialsGatherer
     protected function gatherCredentials($rules, $current, $handle)
     {
         // Alter rules depending on connection type
-        $authCredentials = ['key', 'password', 'keyphrase', 'agent', 'agent-forward'];
+        $authCredentials = ['key', 'password', 'keyphrase', 'agent', 'agent_forward'];
         $unprompted      = $this->alterRules($rules, $current, $handle);
 
         // Loop through credentials and ask missing ones
@@ -277,7 +277,7 @@ class CredentialsGatherer
         }
 
         if (isset($credentials['agent']) && $credentials['agent']) {
-            return ['agent', 'agent-forward'];
+            return ['agent', 'agent_forward'];
         } elseif ($this->usesSsh($handle, $credentials)) {
             $rules['key']       = true;
             $rules['keyphrase'] = true;
