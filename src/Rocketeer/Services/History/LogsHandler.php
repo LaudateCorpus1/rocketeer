@@ -44,6 +44,11 @@ class LogsHandler
             return;
         }
 
+        // No current release and no release option means we don't know where to log yet
+        if (!$this->releasesManager->getCurrentRelease() && !$this->getOption('release')) {
+            return;
+        }
+
         // Recurse for arrays
         if (is_array($line)) {
             foreach ($line as $entry) {
@@ -61,7 +66,7 @@ class LogsHandler
         $line = preg_replace("/" . $pattern . "/", 'fg class="$1"', $line);
         $line = preg_replace("/\/" . $pattern . ">/", '</fg>', $line);
 
-        $release = $this->releasesManager->getNextRelease();
+        $release = $this->getOption('release') ?: $this->releasesManager->getCurrentRelease();
         $prefix = $this->config->get('brain::log.prefix', 'deploy:'.$release);
 
         // Long-term storage
