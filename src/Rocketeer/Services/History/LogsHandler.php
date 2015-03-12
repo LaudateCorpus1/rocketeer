@@ -39,7 +39,6 @@ class LogsHandler
      */
     public function publish($line)
     {
-        return;
         // Do not publish in pretend mode, or in Brain without a log prefix set
         if ($this->getOption('pretend') || ($this->config->get('brain::active') && !$this->config->get('brain::log.active', true))) {
             return;
