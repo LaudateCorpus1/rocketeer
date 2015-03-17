@@ -55,6 +55,10 @@ class RemoteHandler
      */
     public function connection($connection = null, $server = 0)
     {
+        if ($this->rocketeer->isLocal()) {
+            return $this->credentials->createConnectionKey('local', $server);
+        }
+
         $connection = $connection ? $this->credentials->createConnectionKey($connection, $server) : $this->connections->getCurrentConnection();
         $handle     = (string) $connection->toHandle();
 
