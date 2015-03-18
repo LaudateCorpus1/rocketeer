@@ -71,7 +71,11 @@ class CredentialsGatherer
     public function getServerCredentials()
     {
         if ($connections = $this->command->option('on')) {
-            $this->connections->setConnection($connections);
+            if ($connections === 'local') {
+                $this->connections->setConnection($connections);
+            } else {
+                $this->connections->setConnections($connections);
+            }
         }
 
         // Check for configured connections
