@@ -289,6 +289,9 @@ class ReleasesManager
      */
     public function getPreviousRelease($release = null)
     {
+        // Refresh state - this should be done by switching connections
+        $this->state = $this->getValidationFile();
+
         // Get all releases and the current one
         $releases = $this->getReleases();
         $current  = $release ?: $this->getCurrentRelease();
