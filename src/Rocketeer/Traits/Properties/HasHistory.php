@@ -51,9 +51,9 @@ trait HasHistory
      *
      * @param array|string|bool $output
      */
-    public function toOutput($output, $log = true)
+    public function toOutput($output)
     {
-        $this->appendTo('output', $output, $log);
+        $this->appendTo('output', $output);
     }
 
     /**
@@ -82,7 +82,7 @@ trait HasHistory
      * @param string            $type
      * @param string|array|bool $command
      */
-    protected function appendTo($type, $command, $log = true)
+    protected function appendTo($type, $command)
     {
         // Flatten one-liners
         $command   = (array) $command;
@@ -94,9 +94,7 @@ trait HasHistory
             $command[$key] = $type === 'history' ? '$ '.$entry : $entry;
         }
 
-        if ($log) {
-            $this->logs->log($command, false);
-        }
+        $this->logs->log($command, false);
 
         // Get the various handles
         $handle    = $this->getHistoryHandle();
