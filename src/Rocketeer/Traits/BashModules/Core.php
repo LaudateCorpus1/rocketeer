@@ -301,9 +301,7 @@ trait Core
 
         // Print out command if verbosity level allows it
         if ($verbosity && $this->hasCommand() && ($this->command->getOutput()->getVerbosity() >= $verbosity)) {
-            foreach ((array) $commands as $command) {
-                $this->explainer->line('$ '.$command, 'magenta', false);
-            }
+            $this->explainer->line('$ '.$flattened, 'magenta', false);
         }
     }
 
