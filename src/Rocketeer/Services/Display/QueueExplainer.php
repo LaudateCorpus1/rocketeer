@@ -90,7 +90,6 @@ class QueueExplainer
             $comment .= ' [~'.$time.'s]';
         }
 
-        $this->logs->publish($comment);
         $this->command->line($comment);
     }
 
@@ -119,8 +118,7 @@ class QueueExplainer
 
         // Pass to command and log
         $this->command->line($formatted);
-        $this->logs->log($message, false);
-        $this->logs->publish($formatted);
+        $this->logs->log($message);
 
         return $formatted;
     }
@@ -134,16 +132,6 @@ class QueueExplainer
      */
     public function server($message)
     {
-        // Recurse on multi-line messages
-        if(strstr($message, PHP_EOL)) {
-            $message = explode("\n", $message);
-            foreach ($message as $line) {
-                $this->server($line);
-            }
-
-            return;
-        }
-
         $message = sprintf('<comment>[%s]</comment> %s', $this->connections->getCurrentConnection()->toLongHandle(), $message);
 
         return $this->line($message, null, false);

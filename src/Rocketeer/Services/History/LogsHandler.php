@@ -34,77 +34,23 @@ class LogsHandler
     protected $name = [];
 
     /**
-     * @param $line
-     * @todo move this out to an event
-     */
-    public function publish($line)
-    {
-        // Do not publish in pretend mode, or in Brain without a log prefix set
-        if ($this->getOption('pretend') || ($this->config->get('brain::active') && !$this->config->get('brain::log.active', true))) {
-            return;
-        }
-
-        // No current release and no release option means we don't know where to log yet
-        if (!$this->releasesManager->getCurrentRelease() && !$this->getOption('release')) {
-            return;
-        }
-
-        // Recurse for arrays
-        if (is_array($line)) {
-            foreach ($line as $entry) {
-                $this->publish($entry);
-            }
-
-            return;
-        }
-
-        // Changes <fg=cyan> into <fg class="cyan"> from Symfony Console colours
-        // Other formats:
-        //   <fg=black;bg=cyan>foo</fg=black;bg=cyan>
-        //   <bg=yellow;options=bold>foo</bg=yellow;options=bold>
-        $pattern = '(?:(?:fg|bg|options)=([a-z]+);?)';
-        $line = preg_replace("/" . $pattern . "/", 'fg class="$1"', $line);
-        $line = preg_replace("/\/" . $pattern . ">/", '</fg>', $line);
-
-        $release = $this->getOption('release') ?: $this->releasesManager->getCurrentRelease();
-        $prefix = $this->config->get('brain::log.prefix', 'deploy:'.$release);
-
-        // Long-term storage
-        $this->redis->rpush($prefix.':log', $line);
-
-        if (!$this->config->get('brain::log.publish', true)) {
-            return;
-        }
-
-        // Real-time eventing
-        $this->redis->publish($prefix, json_encode(array(
-            'event' => 'log',
-            'line'  => $line,
-        )));
-    }
-
-    /**
      * Save something for the logs.
      *
      * @param string|string[] $string
      */
-    public function log($string, $publish = true)
+    public function log($string)
     {
         // No stage means we're actually not ready to log yet
         // This is a symptom of calling this method from Bash, where stage is
         // figured out for the first time
         if (! $this->connections->getCurrentConnection()->stage) {
-            return;
+            // return;
         }
 
         // Create entry in the logs
         $file = $this->getCurrentLogsFile();
         if (!isset($this->logs[$file])) {
             $this->logs[$file] = [];
-        }
-
-        if ($publish) {
-            $this->publish($this->prependHandle($string));
         }
 
         // Prepend currenth handle
