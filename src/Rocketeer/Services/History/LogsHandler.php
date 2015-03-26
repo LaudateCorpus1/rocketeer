@@ -40,13 +40,6 @@ class LogsHandler
      */
     public function log($string)
     {
-        // No stage means we're actually not ready to log yet
-        // This is a symptom of calling this method from Bash, where stage is
-        // figured out for the first time
-        if (! $this->connections->getCurrentConnection()->stage) {
-            // return;
-        }
-
         // Create entry in the logs
         $file = $this->getCurrentLogsFile();
         if (!isset($this->logs[$file])) {
