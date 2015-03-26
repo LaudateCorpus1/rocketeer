@@ -94,7 +94,7 @@ trait HasHistory
             $command[$key] = $type === 'history' ? '$ '.$entry : $entry;
         }
 
-        $this->logs->log($command, false);
+        $this->logs->log($command);
 
         // Get the various handles
         $handle    = $this->getHistoryHandle();
