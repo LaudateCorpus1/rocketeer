@@ -44,6 +44,14 @@ abstract class AbstractCommand extends Command implements IdentifierInterface
      */
     protected $task;
 
+    public function line($message)
+    {
+        // todo event this
+        $this->logspublisher->publish($message);
+
+        parent::line($message);
+    }
+
     /**
      * @param AbstractTask|null $task
      */
