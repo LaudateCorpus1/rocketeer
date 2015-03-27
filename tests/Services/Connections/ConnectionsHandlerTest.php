@@ -58,12 +58,13 @@ class ConnectionsHandlerTest extends RocketeerTestCase
 
         $this->app['rocketeer.storage.local']->set('connections', [
             'staging' => [
-                'host' => 'foobar',
-                'username' => 'user',
-                'password' => '',
-                'keyphrase' => '',
-                'key' => '/Users/user/.ssh/id_rsa',
-                'agent' => '',
+                'host'          => 'foobar',
+                'username'      => 'user',
+                'password'      => '',
+                'keyphrase'     => '',
+                'key'           => '/Users/user/.ssh/id_rsa',
+                'agent'         => '',
+                'agent_forward' => '',
             ],
         ]);
         $connections = $this->connections->getAvailableConnections();

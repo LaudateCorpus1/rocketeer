@@ -16,6 +16,7 @@ use Rocketeer\Interfaces\ConnectionInterface;
 use Rocketeer\Interfaces\HasRolesInterface;
 use Rocketeer\Traits\HasLocator;
 use Rocketeer\Traits\Properties\HasRoles;
+use Symfony\Component\Process\Process;
 
 /**
  * Stub of local connections to make Rocketeer work
@@ -46,14 +47,25 @@ class LocalConnection implements ConnectionInterface, HasRolesInterface
         $commands = (array) $commands;
         $command = implode(' && ', $commands);
 
-        exec($command, $output, $status);
+        $process = new Process($command);
+        $process->setTimeout(null);
 
-        $this->previousStatus = $status;
-        if ($callback) {
-            $output = (array) $output;
-            foreach ($output as $line) {
-                $callback($line.PHP_EOL);
+        $process->run(function ($type, $buffer) use ($callback) {
+            if (Process::ERR === $type) {
+                if ($callback) {
+                    $callback($buffer.PHP_EOL);
+                }
+            } else {
+                if ($callback) {
+                    $callback($buffer.PHP_EOL);
+                }
             }
+        });
+
+        try {
+            $this->previousStatus = $process->wait();
+        } catch (\RuntimeException $e) {
+            $this->previousStatus = 1;
         }
     }
 

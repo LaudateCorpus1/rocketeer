@@ -279,10 +279,11 @@ abstract class ContainerTestCase extends PHPUnit_Framework_TestCase
             'application_name' => 'foobar',
             'logs' => null,
             'remote.permissions.files' => ['tests'],
-            'remote.shared' => ['tests/Elements'],
-            'remote.keep_releases' => 1,
-            'scm' => [
-                'branch' => 'master',
+            'remote.shared'            => ['tests/Elements'],
+            'remote.keep_releases'     => 1,
+            'remote.root_directory'    => __DIR__.'/../_server/',
+            'scm'                      => [
+                'branch'     => 'master',
                 'repository' => 'https://github.com/'.$this->repository,
                 'scm' => 'git',
                 'shallow' => true,

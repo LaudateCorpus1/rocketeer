@@ -55,12 +55,12 @@ class Cleanup extends AbstractTask
             return $this->explainer->line('No releases to prune from the server');
         }
 
+        // Remove from state file
+        $this->cleanStates($trash);
+
         // Prune releases
         $trash = array_map([$this->releasesManager, 'getPathToRelease'], $trash);
         $this->removeFolder($trash);
-
-        // Remove from state file
-        $this->cleanStates($trash);
 
         // Create final message
         $trash = count($trash);

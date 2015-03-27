@@ -77,6 +77,18 @@ abstract class AbstractCommand extends Command implements IdentifierInterface
      */
     protected $task;
 
+    public function line($message)
+    {
+        try {
+            // todo event this
+            $this->logspublisher->publish($message);
+        } catch (\ReflectionException $e) {
+            // Pokémon!
+        }
+
+        parent::line($message);
+    }
+
     /**
      * @param AbstractTask|null $task
      */
@@ -159,6 +171,7 @@ abstract class AbstractCommand extends Command implements IdentifierInterface
             ['key', null, InputOption::VALUE_REQUIRED, 'The key to use if asked'],
             ['keyphrase', null, InputOption::VALUE_REQUIRED, 'The keyphrase to use if asked'],
             ['agent', null, InputOption::VALUE_REQUIRED, 'The agent to use if asked'],
+            ['agent_forward', null, InputOption::VALUE_NONE, 'Use agent forwarding'],
             ['repository', null, InputOption::VALUE_REQUIRED, 'The repository to use if asked'],
         ];
 
@@ -306,7 +319,9 @@ abstract class AbstractCommand extends Command implements IdentifierInterface
         // Save history to logs
         $logs = $this->logs->write();
         foreach ($logs as $log) {
-            $this->explainer->info('Saved logs to '.$log);
+            if ($log) {
+                $this->info('Saved logs to '.$log);
+            }
         }
 
         return $status ? 0 : 1;

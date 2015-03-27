@@ -52,4 +52,14 @@ class ConfigurationCache extends ConfigCache
 
         return $configuration;
     }
+
+    /**
+     * Get the path to the cache file.
+     *
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->getPath();
+    }
 }

@@ -127,6 +127,7 @@ EOF
                                         ->scalarNode('key')->defaultValue('{key}')->end()
                                         ->scalarNode('keyphrase')->defaultValue('{keyphrase}')->end()
                                         ->scalarNode('agent')->defaultValue('{agent}')->end()
+                                        ->scalarNode('agent_forward')->defaultValue('{agent_forward}')->end()
                                         ->booleanNode('db_role')->defaultTrue()->end()
                                         ->scalarNode('root_directory')
                                           ->info("The root directory where your applications will be deployed.\nThis path needs to start at the root, ie. start with a /")

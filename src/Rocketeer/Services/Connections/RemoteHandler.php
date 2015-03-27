@@ -68,6 +68,10 @@ class RemoteHandler
      */
     public function connection($connection = null, $server = 0)
     {
+        if ($this->rocketeer->isLocal()) {
+            $connection = 'local';
+        }
+
         $connection = $connection ? $this->credentials->createConnectionKey($connection, $server) : $this->connections->getCurrentConnection();
         $handle = (string) $connection->toHandle();
 
@@ -138,8 +142,12 @@ class RemoteHandler
      */
     protected function getAuth(array $config)
     {
-        if (isset($config['agent']) && $config['agent'] === true) {
-            return ['agent' => true];
+        if (isset($config['agent']) && $config['agent']) {
+            if (isset($config['agent_forward']) && $config['agent_forward']) {
+                return ['agent' => true, 'agent_forward' => true];
+            } else {
+                return ['agent' => true];
+            }
         } elseif (isset($config['key']) && trim($config['key']) !== '') {
             return ['key' => $config['key'], 'keyphrase' => $config['keyphrase']];
         } elseif (isset($config['keytext']) && trim($config['keytext']) !== '') {

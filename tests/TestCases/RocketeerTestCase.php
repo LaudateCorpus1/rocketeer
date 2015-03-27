@@ -77,7 +77,10 @@ abstract class RocketeerTestCase extends ContainerTestCase
         $files = preg_grep('/^([^.0])/', scandir(__DIR__.'/../..'));
         sort($files);
 
-        static::$currentFiles = array_values($files);
+        // Setup local server
+        $this->server          = __DIR__.'/../_server/foobar';
+        $this->customConfig    = $this->server.'/../.rocketeer';
+        $this->deploymentsFile = $this->server.'/deployments.json';
 
         // Bind dummy AbstractTask
         $this->task = $this->task('Cleanup');
