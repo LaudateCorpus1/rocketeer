@@ -227,7 +227,9 @@ abstract class AbstractCommand extends Command implements IdentifierInterface
         // Save history to logs
         $logs = $this->logs->write();
         foreach ($logs as $log) {
-            $this->info('Saved logs to '.$log);
+            if ($log) {
+                $this->info('Saved logs to '.$log);
+            }
         }
 
         return $status ? 0 : 1;
