@@ -58,6 +58,6 @@ class ConfigurationCache extends ConfigCache
      */
     public function getFile()
     {
-        return $this->__toString();
+        return $this->getPath();
     }
 }
