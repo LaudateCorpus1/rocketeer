@@ -46,8 +46,12 @@ abstract class AbstractCommand extends Command implements IdentifierInterface
 
     public function line($message)
     {
-        // todo event this
-        $this->logspublisher->publish($message);
+        try {
+            // todo event this
+            $this->logspublisher->publish($message);
+        } catch (\ReflectionException $e) {
+            // Pokémon!
+        }
 
         parent::line($message);
     }
