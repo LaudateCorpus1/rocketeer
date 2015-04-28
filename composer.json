@@ -30,7 +30,8 @@
     "patchwork/utf8": "~1.1",
     "phpseclib/phpseclib": "2.0.*@dev",
     "symfony/config": "~2.6",
-    "symfony/var-dumper": "~2.6"
+    "symfony/var-dumper": "~2.6",
+    "symfony/process": "~2.6"
   },
   "require-dev": {
     "fabpot/php-cs-fixer": "2.0.*@dev",
@@ -39,8 +40,7 @@
     "nesbot/carbon": "~1.13",
     "phpunit/phpunit": "~4.4",
     "psy/psysh": "0.4.*",
-    "rocketeers/rocketeer-laravel": "1.0.*@dev",
-    "kherge/box": "~2.5"
+    "rocketeers/rocketeer-laravel": "1.0.*@dev"
   },
   "suggest": {
     "psy/psysh": "Required for the 'tinker' command",
