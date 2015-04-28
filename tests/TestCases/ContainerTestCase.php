@@ -233,9 +233,6 @@ abstract class ContainerTestCase extends PHPUnit_Framework_TestCase
         }, $keys);
         $defaults = array_combine($keys, array_values($defaults));
 
-        $reflector = new \ReflectionClass(get_class($this));
-        $filename = $reflector->getFileName();
-
         $overrides = [
             'cache.driver'             => 'file',
             'database.default'         => 'mysql',
@@ -250,8 +247,7 @@ abstract class ContainerTestCase extends PHPUnit_Framework_TestCase
             'remote.permissions.files' => ['tests'],
             'remote.shared'            => ['tests/Elements'],
             'remote.keep_releases'     => 1,
-            'remote.root_directory'    => dirname($filename).'/../_server/',
-            'remote.app_directory'     => 'foobar',
+            'remote.root_directory'    => __DIR__.'/../_server/',
             'scm'                      => [
                 'branch'     => 'master',
                 'repository' => 'https://github.com/'.$this->repository,

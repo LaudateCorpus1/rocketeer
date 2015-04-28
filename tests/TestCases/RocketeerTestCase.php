@@ -81,8 +81,6 @@ abstract class RocketeerTestCase extends ContainerTestCase
      */
     protected static $numberFiles;
 
-    protected $laravel = true;
-
     /**
      * Set up the tests.
      */
@@ -96,11 +94,8 @@ abstract class RocketeerTestCase extends ContainerTestCase
             static::$numberFiles = count($files);
         }
 
-        $reflector = new \ReflectionClass(get_class($this));
-        $filename = $reflector->getFileName();
-
         // Setup local server
-        $this->server          = dirname($filename).'/../_server/foobar';
+        $this->server          = __DIR__.'/../_server/foobar';
         $this->customConfig    = $this->server.'/../.rocketeer';
         $this->deploymentsFile = $this->server.'/deployments.json';
 
@@ -116,7 +111,7 @@ abstract class RocketeerTestCase extends ContainerTestCase
         });
 
         // Mock OS
-        $this->usesLaravel($this->laravel);
+        $this->usesLaravel(true);
         $this->mockOperatingSystem('Linux');
 
         // Cache paths
