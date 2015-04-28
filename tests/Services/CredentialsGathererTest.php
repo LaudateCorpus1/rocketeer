@@ -124,7 +124,7 @@ class CredentialsGathererTest extends RocketeerTestCase
             'keyphrase'     => null,
             'key'           => null,
             'agent'         => null,
-            'agent-forward' => null,
+            'agent_forward' => null,
         ], $credentials);
     }
 
@@ -158,7 +158,7 @@ class CredentialsGathererTest extends RocketeerTestCase
             'keyphrase'     => null,
             'key'           => null,
             'agent'         => null,
-            'agent-forward' => null,
+            'agent_forward' => null,
         ], $credentials);
     }
 
@@ -191,7 +191,7 @@ class CredentialsGathererTest extends RocketeerTestCase
             'keyphrase'     => null,
             'key'           => null,
             'agent'         => null,
-            'agent-forward' => null,
+            'agent_forward' => null,
         ], $credentials);
     }
 
@@ -224,7 +224,7 @@ class CredentialsGathererTest extends RocketeerTestCase
             'keyphrase'     => null,
             'key'           => null,
             'agent'         => null,
-            'agent-forward' => null,
+            'agent_forward' => null,
         ], $credentials);
 
         $stored = $this->localStorage->get('connections.production.servers.0');
