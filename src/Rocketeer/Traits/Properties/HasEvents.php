@@ -158,7 +158,7 @@ trait HasEvents
         // If the event returned a strict false, halt the task
         $wasHalted = $event && $event->isPropagationStopped();
         if ($wasHalted && $event !== 'halt' && method_exists($this, 'halt')) {
-            $this->halt();
+            $this->halt(get_class().' fired '.$event->getName().' and got a strict false');
         }
 
         return !$wasHalted;
