@@ -118,6 +118,7 @@ class ReleasesManager
 
         // Get first X valid releases
         $keep = $this->getValidReleases();
+
         $keep = array_slice($keep, 0, $treshold);
 
         // Compute diff
@@ -134,6 +135,9 @@ class ReleasesManager
      */
     public function getValidReleases()
     {
+        // Refresh state - this should be done by switching connections
+        $this->state = $this->getValidationFile();
+
         $valid = array_filter($this->state);
         $valid = array_keys($valid);
 
