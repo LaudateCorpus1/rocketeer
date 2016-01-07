@@ -60,6 +60,7 @@ trait TasksBuilder
         // Set task properties
         $task->setName($name);
         $task->setDescription($description);
+        $task->setHalted(false);
 
         return $task;
     }
