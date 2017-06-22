@@ -294,13 +294,11 @@ trait Core
      */
     protected function displayCommands($commands, $verbosity = 1)
     {
-        // Format command and verbosity level
-        $flattened = (array) $commands;
-        $flattened = implode(PHP_EOL.'$ ', $flattened);
-
         // Print out command if verbosity level allows it
         if ($verbosity && $this->hasCommand() && ($this->command->getOutput()->getVerbosity() >= $verbosity)) {
-            $this->explainer->line('$ '.$flattened, 'magenta', false);
+            foreach ($commands as $command) {
+                $this->explainer->line('$ '.$command, 'magenta', false);
+            }
         }
     }
 
