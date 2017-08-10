@@ -69,7 +69,7 @@ trait Filesystem
                 }
 
                 return $this->run([
-                    sprintf('ln -s %s %s', $folder, $symlink),
+                    sprintf('ln -sf %s %s', $folder, $symlink),
                 ]);
         }
     }
@@ -92,7 +92,7 @@ trait Filesystem
         $temporary = $symlink.'-temp';
 
         return $this->run([
-            sprintf('ln -s %s %s', $folder, $temporary),
+            sprintf('ln -sf %s %s', $folder, $temporary),
             sprintf('mv -Tf %s %s', $temporary, $symlink),
         ]);
     }
